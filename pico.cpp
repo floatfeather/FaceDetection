@@ -19,9 +19,6 @@
 using namespace cv;
 using namespace std;
 
-#define MAX(a, b) ((a)>(b)?(a):(b))
-#define MIN(a, b) ((a)<(b)?(a):(b))
-
 namespace face_detection {
     bool PicoExample::FaceDetect(const Mat& img, vector<int> *face) {
         IplImage frame = img;
