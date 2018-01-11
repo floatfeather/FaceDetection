@@ -16,8 +16,7 @@ using namespace std;
 using namespace cv;
 
 namespace face_detection {
-
-bool opencv_vj_detect(const Mat& img, vector<int>* face, double min_size, double scale, bool tryflip) {
+bool OpenCVExample::face_detect(const Mat& img, vector<int>* face) {
     CascadeClassifier cascade;
     if(!cascade.load(OPENCV_VJ_MODEL_PATH))
     {
@@ -27,18 +26,16 @@ bool opencv_vj_detect(const Mat& img, vector<int>* face, double min_size, double
     vector<Rect> faces;
     Mat gray, smallImg;
     
-    double fx = 1 / scale;
     cvtColor(img, gray, COLOR_BGR2GRAY);
-    resize(gray, smallImg, Size(), fx, fx, INTER_LINEAR_EXACT);
-    equalizeHist(smallImg, smallImg);
+    equalizeHist(gray, smallImg);
     
     double t = (double)getTickCount();
     cascade.detectMultiScale(smallImg, faces,
                              1.1, 2, 0
                              |CASCADE_FIND_BIGGEST_OBJECT
                              |CASCADE_SCALE_IMAGE,
-                             Size(min_size, min_size));
-    if(faces.empty() && tryflip)
+                             Size(MIN_SIZE, MIN_SIZE));
+    if(faces.empty())
     {
         flip(smallImg, smallImg, 1);
         vector<Rect> flip_faces;
@@ -46,7 +43,7 @@ bool opencv_vj_detect(const Mat& img, vector<int>* face, double min_size, double
                                  1.1, 2, 0
                                  |CASCADE_FIND_BIGGEST_OBJECT
                                  |CASCADE_SCALE_IMAGE,
-                                 Size(min_size, min_size));
+                                 Size(MIN_SIZE, MIN_SIZE));
         if (!flip_faces.empty()) {
             Rect r = flip_faces[0];
             faces.push_back(Rect(smallImg.cols - r.x - r.width, r.y, r.width, r.height));

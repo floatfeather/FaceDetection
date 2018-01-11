@@ -11,9 +11,13 @@
 
 #include <vector>
 #include "opencv2/imgproc.hpp"
+#include "running_example.h"
 
 namespace face_detection {
-    bool opencv_vj_detect(const cv::Mat& img, std::vector<int>* face, double min_size = 30, double scale = 1, bool tryflip = true);
+class OpenCVExample : public RunningExample{
+public:
+    bool face_detect(const cv::Mat& img, std::vector<int>* face);
+};
 }
 
 #endif /* opencv_vj_h */
