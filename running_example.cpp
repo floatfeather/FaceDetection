@@ -17,9 +17,9 @@ using namespace std;
 using namespace cv;
 
 namespace face_detection{
-void RunningExample::draw(const Mat &img, const vector<int> &face) {
+void RunningExample::Draw(const Mat &img, const vector<int> &face) {
     if (face.size() != 4) {
-        imshow( "result", img );
+        imshow("result", img);
         return;
     }
     Rect face_rect(face[0], face[1], face[2], face[3]);
@@ -38,18 +38,18 @@ void RunningExample::draw(const Mat &img, const vector<int> &face) {
         rectangle(img, cvPoint(cvRound(face_rect.x), cvRound(face_rect.y)),
                   cvPoint(cvRound((face_rect.x + face_rect.width-1)), cvRound((face_rect.y + face_rect.height-1))), color, 3, 8, 0);
     }
-    imshow( "result", img );
+    imshow("result", img);
 }
 
-int RunningExample::run() {
+int RunningExample::Run() {
     VideoCapture capture;
     Mat frame;
     capture.open(0);
     if(capture.isOpened())
     {
         cout << "Video capturing has been started ..." << endl;
-        capture.set(CV_CAP_PROP_FRAME_WIDTH, 200);
-        capture.set(CV_CAP_PROP_FRAME_HEIGHT, 200);
+//        capture.set(CV_CAP_PROP_FRAME_WIDTH, 200);
+//        capture.set(CV_CAP_PROP_FRAME_HEIGHT, 200);
         for(;;)
         {
             capture >> frame;
@@ -58,12 +58,16 @@ int RunningExample::run() {
             
             Mat frame1 = frame.clone();
             vector<int> face;
-            if (!face_detect(frame1, &face)) {
+            
+            double t = (double)getTickCount();
+            if (!FaceDetect(frame1, &face)) {
                 cerr << "Error encountered in face detection" << endl;
                 return 1;
             }
+            t = (double)getTickCount() - t;
+            cout << "detection time = " << t*1000/getTickFrequency() << " ms\n";
             
-            draw(frame1, face);
+            Draw(frame1, face);
             
             char c = (char)waitKey(10);
             if( c == 27 || c == 'q' || c == 'Q' )
@@ -72,11 +76,11 @@ int RunningExample::run() {
     } else {
         Mat image = imread("../FaceDetection/test_data/lena.jpg", 1);
         vector<int> face;
-        if (!face_detect(image, &face)) {
+        if (!FaceDetect(image, &face)) {
             cerr << "Error encountered in face detection" << endl;
             return 1;
         }
-        draw(image, face);
+        Draw(image, face);
         waitKey(0);
     }
     

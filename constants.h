@@ -11,6 +11,7 @@
 
 namespace face_detection {
     const std::string OPENCV_VJ_MODEL_PATH = "../FaceDetection/models/haarcascade_frontalface_alt.xml";
+    const std::string PICO_MODEL_PATH="../FaceDetection/models/facefinder";
     const double MIN_SIZE = 30;
 }
 

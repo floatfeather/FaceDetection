@@ -15,9 +15,9 @@
 namespace face_detection {
 class RunningExample {
 public:
-    int run();
-    virtual bool face_detect(const cv::Mat& img, std::vector<int>* face) = 0;
-    void draw(const cv::Mat& img, const std::vector<int>& face);
+    int Run();
+    virtual bool FaceDetect(const cv::Mat& img, std::vector<int>* face) = 0;
+    void Draw(const cv::Mat& img, const std::vector<int>& face);
 };
 }
 

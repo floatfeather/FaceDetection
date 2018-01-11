@@ -16,7 +16,7 @@ using namespace std;
 using namespace cv;
 
 namespace face_detection {
-bool OpenCVExample::face_detect(const Mat& img, vector<int>* face) {
+bool OpenCVExample::FaceDetect(const Mat& img, vector<int>* face) {
     CascadeClassifier cascade;
     if(!cascade.load(OPENCV_VJ_MODEL_PATH))
     {
@@ -29,7 +29,6 @@ bool OpenCVExample::face_detect(const Mat& img, vector<int>* face) {
     cvtColor(img, gray, COLOR_BGR2GRAY);
     equalizeHist(gray, smallImg);
     
-    double t = (double)getTickCount();
     cascade.detectMultiScale(smallImg, faces,
                              1.1, 2, 0
                              |CASCADE_FIND_BIGGEST_OBJECT
@@ -50,8 +49,6 @@ bool OpenCVExample::face_detect(const Mat& img, vector<int>* face) {
         }
     }
     
-    t = (double)getTickCount() - t;
-    cout << "detection time = " << t*1000/getTickFrequency() << " ms\n";
     if (!faces.empty()) {
         face->push_back(faces[0].x);
         face->push_back(faces[0].y);

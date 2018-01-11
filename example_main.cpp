@@ -7,9 +7,12 @@
 //
 
 #include "opencv_vj.h"
+#include "pico.h"
 
 int main() {
-    face_detection::OpenCVExample opencv_example;
-    opencv_example.run();
+//    face_detection::OpenCVExample opencv_example;
+//    opencv_example.Run();
+    face_detection::PicoExample pico_example;
+    pico_example.Run();
     return 0;
 }

@@ -16,7 +16,7 @@
 namespace face_detection {
 class OpenCVExample : public RunningExample{
 public:
-    bool face_detect(const cv::Mat& img, std::vector<int>* face);
+    bool FaceDetect(const cv::Mat& img, std::vector<int>* face);
 };
 }
 
