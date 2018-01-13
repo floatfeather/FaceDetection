@@ -57,9 +57,6 @@ namespace face_detection {
     }
     
     bool PicoExample::DetectSingleFrame(const IplImage& frame, std::vector<int>* face) {
-        int i, j;
-        float t;
-        
         uint8_t* pixels;
         int nrows, ncols, ldim;
         
@@ -78,9 +75,6 @@ namespace face_detection {
             cvCopy(&frame, gray, 0);
         }
         
-        // perform detection with the pico library
-    //    t = getticks();
-        
         pixels = (uint8_t*)gray->imageData;
         nrows = gray->height;
         ncols = gray->width;
@@ -90,19 +84,11 @@ namespace face_detection {
 
         ndetections = ClusterDetections(rcsq, ndetections);
         
-    //    t = getticks() - t;
-        
-        // if the flag is set, draw each detection
-    //    if(draw)
-    //        for(i=0; i<ndetections; ++i)
-    //            if(rcsq[4*i+3]>=qthreshold) // check the confidence threshold
-    //                cvCircle(frame, cvPoint(rcsq[4*i+1], rcsq[4*i+0]), rcsq[4*i+2]/2, CV_RGB(255, 0, 0), 4, 8, 0); // we draw circles here since height-to-width ratio of the detected face regions is 1.0f
-        
         free(cascade);
         
         int x,y,width,height;
         double max_area = 0;
-        for(i=0; i<ndetections; ++i) {
+        for(int i=0; i<ndetections; ++i) {
             if(rcsq[4*i+3] >= 5.0f) {// check the confidence threshold
                 double area = rcsq[4*i+2] * rcsq[4*i+2];
                 if (area > max_area) {

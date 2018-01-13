@@ -8,6 +8,7 @@
 
 #include "running_example.h"
 
+#include "constants.h"
 #include <vector>
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
@@ -45,17 +46,20 @@ int RunningExample::Run() {
     VideoCapture capture;
     Mat frame;
     capture.open(0);
+    double total_tick_count = 0;
+    int frame_count = 0;
     if(capture.isOpened())
     {
         cout << "Video capturing has been started ..." << endl;
-//        capture.set(CV_CAP_PROP_FRAME_WIDTH, 200);
-//        capture.set(CV_CAP_PROP_FRAME_HEIGHT, 200);
+        capture.set(CV_CAP_PROP_FRAME_WIDTH, CAMERA_WIDTH);
+        capture.set(CV_CAP_PROP_FRAME_HEIGHT, CAMERA_HEIGHT);
         for(;;)
         {
             capture >> frame;
             if( frame.empty() )
                 break;
             
+            frame_count++;
             Mat frame1 = frame.clone();
             vector<int> face;
             
@@ -65,6 +69,7 @@ int RunningExample::Run() {
                 return 1;
             }
             t = (double)getTickCount() - t;
+            total_tick_count += t*1000/getTickFrequency();
             cout << "detection time = " << t*1000/getTickFrequency() << " ms\n";
             
             Draw(frame1, face);
@@ -73,6 +78,7 @@ int RunningExample::Run() {
             if( c == 27 || c == 'q' || c == 'Q' )
                 break;
         }
+        cout << "average detection time = " << total_tick_count / frame_count << " ms\n";
     } else {
         Mat image = imread("../FaceDetection/test_data/lena.jpg", 1);
         vector<int> face;
