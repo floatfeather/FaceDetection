@@ -17,16 +17,18 @@ using namespace std;
 
 void RunOpenCV() {
     face_detection::OpenCVDetector opencv_example;
-    opencv_example.RunCamera();
+//    opencv_example.RunCamera();
     //opencv_example.RunImage("/Users/lillian/yzkj/code/workspace/FaceDetection/FaceDetection/test_data/lena.jpg", nullptr, true, true);
     //cv::waitKey(0);
-//    std::vector<std::string> image_paths;
-//    for (int i = 0; i < 200; i++) {
-//        char buf[10];
-//        std::sprintf(buf, "%d", i);
-//        image_paths.push_back("/Users/lillian/yzkj/code/workspace/FaceDetection/FaceDetection/result/image_" + std::string(buf) + ".jpg");
-//    }
-//    opencv_example.RunImages(image_paths, false, true);
+    opencv_example.StartLog();
+    std::vector<std::string> image_paths;
+    for (int i = 0; i < 200; i++) {
+        char buf[10];
+        std::sprintf(buf, "%d", i);
+        image_paths.push_back("/Users/lillian/yzkj/code/workspace/FaceDetection/FaceDetection/result/image_" + std::string(buf) + ".jpg");
+    }
+    opencv_example.RunImages(image_paths, false, true);
+    opencv_example.EndLog();
 }
 
 void RunPico() {
@@ -62,8 +64,8 @@ void GenerateImages() {
 }
 
 int main() {
-//    RunOpenCV();
-    RunPico();
+    RunOpenCV();
+//    RunPico();
 //    RunOpenNPD();
 //    GenerateImages();
     return 0;

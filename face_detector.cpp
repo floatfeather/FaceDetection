@@ -14,25 +14,16 @@
 #include "opencv2/imgproc.hpp"
 #include <iostream>
 
-#define INIT_CHECK(ret) \
-    {\
-        if (!init) {\
-        cerr << "Not correctly initialized!. Please call Init() before use." << endl; \
-            return ret;\
-        }\
-    }
-
 using namespace std;
 using namespace cv;
 
 namespace face_detection{
     
-    void FaceDetector::Init() {
+    void FaceDetector::StartLog() {
         logger.Init(LOGGER_DIR, MethodName());
-        init = true;
     }
     
-    FaceDetector::FaceDetector() {
+    void FaceDetector::EndLog() {
         logger.Write();
     }
     
@@ -88,7 +79,6 @@ namespace face_detection{
     }
 
     int FaceDetector::RunCamera(bool show, bool save) {
-        INIT_CHECK(1);
         VideoCapture capture;
         Mat frame;
         capture.open(0);
@@ -133,7 +123,6 @@ namespace face_detection{
     }
 
     int FaceDetector::RunImage(const string image_path, double* time, bool show, bool save) {
-        INIT_CHECK(1);
         double t = (double)getTickCount();
         Mat image = imread(image_path, 1);
         vector<int> face;
@@ -158,7 +147,6 @@ namespace face_detection{
     }
     
     int FaceDetector::RunImages(const vector<string> image_paths, bool show, bool save) {
-        INIT_CHECK(1);
         int return_status = 0;
         for(auto image_path : image_paths) {
             double time;

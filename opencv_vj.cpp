@@ -21,7 +21,6 @@ namespace face_detection {
         {
             cerr << "ERROR: Could not load classifier cascade" << endl;
         }
-        Init();
     }
     
     string OpenCVDetector::MethodName() {

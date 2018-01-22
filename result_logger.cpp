@@ -20,19 +20,28 @@ namespace face_detection {
             this->log_dir = log_dir + "/";
         }
         this->log_dir = this->log_dir + method + "_";
+        articulations.clear();
+        times.clear();
+        results.clear();
         init = true;
     }
     
     void ResultLogger::AddArticulation(double art) {
-        articulations.push_back(art);
+        if (init) {
+            articulations.push_back(art);
+        }
     }
     
     void ResultLogger::AddDetectionTime(double time) {
-        times.push_back(time);
+        if (init) {
+            times.push_back(time);
+        }
     }
     
     void ResultLogger::AddDetectionResult(bool detected) {
-        results.push_back(detected);
+        if (init) {
+            results.push_back(detected);
+        }
     }
     
     void ResultLogger::ComputeStatistics(vector<double>* info, int* min_time, int* max_time, int* avg_time, int* mid_time, int* var_time) {

@@ -23,7 +23,6 @@ namespace face_detection {
     
     PicoDetector::PicoDetector() {
         cascade = GetCascade();
-        Init();
     }
     
     PicoDetector::~PicoDetector() {

@@ -16,8 +16,6 @@
 namespace face_detection {
 class FaceDetector {
 public:
-    FaceDetector();
-    void Init();
     int RunCamera(bool show = true, bool save = false);
     int RunImage(const std::string image_path, double* time = nullptr, bool show = true, bool save = false);
     int RunImages(const std::vector<std::string> image_paths, bool show = true, bool save = false);
@@ -26,9 +24,10 @@ public:
     void Draw(const cv::Mat& img, const std::vector<int>& face, bool show, bool save, std::string save_path = "");
     void DrawArticulation(const cv::Mat& img);
     void ShowAndSave(const cv::Mat& img, bool show, bool save, std::string save_path);
+    void StartLog();
+    void EndLog();
 private:
     ResultLogger logger;
-    bool init = false;
 };
 }
 

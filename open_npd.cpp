@@ -16,7 +16,6 @@ namespace face_detection {
     OpenNPDDetector::OpenNPDDetector() {
         npd = new npd::npddetect(MIN_SIZE, MAX_SIZE);
         npd->load(OPEN_NPD_MODEL_PATH.c_str());
-        Init();
     }
     
     OpenNPDDetector::~OpenNPDDetector() {

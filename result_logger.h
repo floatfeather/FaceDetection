@@ -20,8 +20,8 @@ namespace face_detection{
         void AddDetectionTime(double time);
         void AddDetectionResult(bool detected);
         void AddArticulation(double art);
-        void ComputeStatistics(std::vector<double>* info, int* min_time, int* max_time, int* avg_time, int* mid_time, int* var_time);
     private:
+        void ComputeStatistics(std::vector<double>* info, int* min_time, int* max_time, int* avg_time, int* mid_time, int* var_time);
         std::vector<double> times;
         std::vector<bool> results;
         std::vector<double> articulations;
