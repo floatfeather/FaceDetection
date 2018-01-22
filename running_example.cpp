@@ -25,7 +25,7 @@ namespace face_detection{
         string meanValueString;
         meanValueStream << mean(imageSobel)[0] * mean(imageSobel)[0];
         meanValueStream >> meanValueString;
-        meanValueString = "Articulation(Variance Method): " + meanValueString;
+        meanValueString = "Articulation: " + meanValueString;
         putText(img, meanValueString, Point(20, 50), CV_FONT_HERSHEY_COMPLEX, 0.5, Scalar(255, 255, 25));
     }
     

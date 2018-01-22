@@ -6,8 +6,8 @@
 //  Copyright © 2018年 Ran Wang. All rights reserved.
 //
 
-#ifndef running_example_hpp
-#define running_example_hpp
+#ifndef running_example_h
+#define running_example_h
 
 #include <vector>
 #include "opencv2/imgproc.hpp"
@@ -25,4 +25,4 @@ public:
 };
 }
 
-#endif /* running_example_hpp */
+#endif /* running_example_h */

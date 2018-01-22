@@ -6,9 +6,21 @@
 //  Copyright © 2018年 Ran Wang. All rights reserved.
 //
 
-#ifndef open_npd_hpp
-#define open_npd_hpp
+#ifndef open_npd_h
+#define open_npd_h
 
-#include <stdio.h>
+#include "running_example.h"
+#include "npddetect.h"
 
-#endif /* open_npd_hpp */
+namespace face_detection {
+    class OpenNPDExample : public RunningExample{
+    public:
+        OpenNPDExample();
+        virtual ~OpenNPDExample();
+        bool FaceDetect(const cv::Mat& img, std::vector<int>* face);
+    private:
+        npd::npddetect *npd;
+    };
+}
+
+#endif /* open_npd_h */
