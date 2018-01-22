@@ -9,19 +9,28 @@
 #include "open_npd.h"
 #include "constants.h"
 
+using namespace cv;
+
 namespace face_detection {
     
     OpenNPDExample::OpenNPDExample() {
         npd = new npd::npddetect(MIN_SIZE, MAX_SIZE);
         npd->load(OPEN_NPD_MODEL_PATH.c_str());
+        Init();
     }
     
     OpenNPDExample::~OpenNPDExample() {
         free(npd);
     }
     
-    bool OpenNPDExample::FaceDetect(const cv::Mat& img, std::vector<int>* face) {
-        int n = npd->detect(img.data, img.cols, img.rows);
+    string OpenNPDExample::MethodName() {
+        return "open_npd";
+    }
+    
+    bool OpenNPDExample::FaceDetect(const Mat& img, std::vector<int>* face) {
+        Mat frame;
+        cvtColor(img, frame, cv::COLOR_BGR2GRAY);
+        int n = npd->detect(frame.data, frame.cols, frame.rows);
         vector<int>& Xs = npd->getXs();
         vector<int>& Ys = npd->getYs();
         vector<int>& Ss = npd->getSs();

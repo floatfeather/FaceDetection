@@ -14,18 +14,38 @@
 #include "opencv2/imgproc.hpp"
 #include <iostream>
 
+#define INIT_CHECK(ret) \
+    {\
+        if (!init) {\
+        cerr << "Not correctly initialized!. Please call Init() before use." << endl; \
+            return ret;\
+        }\
+    }
+
 using namespace std;
 using namespace cv;
 
 namespace face_detection{
+    
+    void RunningExample::Init() {
+        logger.Init(LOGGER_DIR, MethodName());
+        init = true;
+    }
+    
+    RunningExample::~RunningExample() {
+        logger.Write();
+    }
+    
     void RunningExample::DrawArticulation(const Mat& img) {
         Mat imageSobel;
         stringstream meanValueStream;
         Sobel(img, imageSobel, CV_16U, 1, 1);
+        double art = mean(imageSobel)[0] * mean(imageSobel)[0];
         string meanValueString;
-        meanValueStream << mean(imageSobel)[0] * mean(imageSobel)[0];
+        meanValueStream << art;
         meanValueStream >> meanValueString;
         meanValueString = "Articulation: " + meanValueString;
+        logger.AddArticulation(art);
         putText(img, meanValueString, Point(20, 50), CV_FONT_HERSHEY_COMPLEX, 0.5, Scalar(255, 255, 25));
     }
     
@@ -68,6 +88,7 @@ namespace face_detection{
     }
 
     int RunningExample::RunCamera(bool show, bool save) {
+        INIT_CHECK(1);
         VideoCapture capture;
         Mat frame;
         capture.open(0);
@@ -112,6 +133,7 @@ namespace face_detection{
     }
 
     int RunningExample::RunImage(const string image_path, double* time, bool show, bool save) {
+        INIT_CHECK(1);
         double t = (double)getTickCount();
         Mat image = imread(image_path, 1);
         vector<int> face;
@@ -122,6 +144,12 @@ namespace face_detection{
         t = (double)getTickCount() - t;
         double duration = t*1000/getTickFrequency();
         cout << "detection time = " << duration << " ms\n";
+        logger.AddDetectionTime(duration);
+        if (face.empty()) {
+            logger.AddDetectionResult(false);
+        } else {
+            logger.AddDetectionResult(true);
+        }
         if (time != nullptr) {
             *time = duration;
         }
@@ -130,6 +158,7 @@ namespace face_detection{
     }
     
     int RunningExample::RunImages(const vector<string> image_paths, bool show, bool save) {
+        INIT_CHECK(1);
         int return_status = 0;
         for(auto image_path : image_paths) {
             double time;

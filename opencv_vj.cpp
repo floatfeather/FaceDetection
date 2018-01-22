@@ -21,6 +21,11 @@ namespace face_detection {
         {
             cerr << "ERROR: Could not load classifier cascade" << endl;
         }
+        Init();
+    }
+    
+    string OpenCVExample::MethodName() {
+        return "opencv_vj";
     }
     
     bool OpenCVExample::FaceDetect(const Mat& img, vector<int>* face) {

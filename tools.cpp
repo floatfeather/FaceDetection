@@ -7,6 +7,7 @@
 //
 
 #include "tools.h"
+#include "constants.h"
 #include <vector>
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
@@ -21,6 +22,8 @@ namespace face_detection {
         VideoCapture capture;
         capture.open(0);
         if(capture.isOpened()) {
+            capture.set(CV_CAP_PROP_FRAME_WIDTH, CAMERA_WIDTH);
+            capture.set(CV_CAP_PROP_FRAME_HEIGHT, CAMERA_HEIGHT);
             for(int i = 0; i < nums; i++) {
                 Mat frame;
                 cout << "Capture frame " << i << endl;

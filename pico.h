@@ -18,6 +18,7 @@ namespace face_detection {
         PicoExample();
         virtual ~PicoExample();
         bool FaceDetect(const cv::Mat& img, std::vector<int>* face);
+        std::string MethodName();
     private:
         bool DetectSingleFrame(const IplImage& frame, std::vector<int>* face);
         int FindObjects(float rcsq[], int maxndetections, void* cascade,

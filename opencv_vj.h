@@ -19,6 +19,7 @@ class OpenCVExample : public RunningExample{
 public:
     OpenCVExample();
     bool FaceDetect(const cv::Mat& img, std::vector<int>* face);
+    std::string MethodName();
 private:
     cv::CascadeClassifier cascade;
 };

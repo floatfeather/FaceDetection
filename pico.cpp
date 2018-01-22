@@ -23,10 +23,15 @@ namespace face_detection {
     
     PicoExample::PicoExample() {
         cascade = GetCascade();
+        Init();
     }
     
     PicoExample::~PicoExample() {
         free(cascade);
+    }
+    
+    string PicoExample::MethodName() {
+        return "pico";
     }
     
     bool PicoExample::FaceDetect(const Mat& img, vector<int> *face) {

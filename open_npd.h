@@ -18,6 +18,7 @@ namespace face_detection {
         OpenNPDExample();
         virtual ~OpenNPDExample();
         bool FaceDetect(const cv::Mat& img, std::vector<int>* face);
+        std::string MethodName();
     private:
         npd::npddetect *npd;
     };
