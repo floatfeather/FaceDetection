@@ -15,6 +15,8 @@
 namespace face_detection {
     class PicoExample : public RunningExample {
     public:
+        PicoExample();
+        virtual ~PicoExample();
         bool FaceDetect(const cv::Mat& img, std::vector<int>* face);
     private:
         bool DetectSingleFrame(const IplImage& frame, std::vector<int>* face);
@@ -27,6 +29,7 @@ namespace face_detection {
         int FindConnectedComponents(int a[], float rcsq[], int n);
         void CCDFS(int a[], int i, float rcsq[], int n);
         float GetOverlap(float r1, float c1, float s1, float r2, float c2, float s2);
+        void* cascade;
     };
 }
 

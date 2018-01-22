@@ -10,13 +10,17 @@
 #define opencv_vj_h
 
 #include <vector>
+#include "opencv2/objdetect.hpp"
 #include "opencv2/imgproc.hpp"
 #include "running_example.h"
 
 namespace face_detection {
 class OpenCVExample : public RunningExample{
 public:
+    OpenCVExample();
     bool FaceDetect(const cv::Mat& img, std::vector<int>* face);
+private:
+    cv::CascadeClassifier cascade;
 };
 }
 

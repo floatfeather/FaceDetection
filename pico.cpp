@@ -20,6 +20,15 @@ using namespace cv;
 using namespace std;
 
 namespace face_detection {
+    
+    PicoExample::PicoExample() {
+        cascade = GetCascade();
+    }
+    
+    PicoExample::~PicoExample() {
+        free(cascade);
+    }
+    
     bool PicoExample::FaceDetect(const Mat& img, vector<int> *face) {
         IplImage frame = img;
         IplImage* framecopy = cvCreateImage(cvSize(frame.width, frame.height), frame.depth, frame.nChannels);
@@ -79,12 +88,9 @@ namespace face_detection {
         nrows = gray->height;
         ncols = gray->width;
         ldim = gray->widthStep;
-        void* cascade = GetCascade();
         ndetections = FindObjects(rcsq, MAXNDETECTIONS, cascade, pixels, nrows, ncols, ldim, 1.1, 0.1, MIN_SIZE, MIN(nrows, ncols));
 
         ndetections = ClusterDetections(rcsq, ndetections);
-        
-        free(cascade);
         
         int x,y,width,height;
         double max_area = 0;
