@@ -13,21 +13,21 @@ using namespace cv;
 
 namespace face_detection {
     
-    OpenNPDExample::OpenNPDExample() {
+    OpenNPDDetector::OpenNPDDetector() {
         npd = new npd::npddetect(MIN_SIZE, MAX_SIZE);
         npd->load(OPEN_NPD_MODEL_PATH.c_str());
         Init();
     }
     
-    OpenNPDExample::~OpenNPDExample() {
+    OpenNPDDetector::~OpenNPDDetector() {
         free(npd);
     }
     
-    string OpenNPDExample::MethodName() {
+    string OpenNPDDetector::MethodName() {
         return "open_npd";
     }
     
-    bool OpenNPDExample::FaceDetect(const Mat& img, std::vector<int>* face) {
+    bool OpenNPDDetector::FaceDetect(const Mat& img, std::vector<int>* face) {
         Mat frame;
         cvtColor(img, frame, cv::COLOR_BGR2GRAY);
         int n = npd->detect(frame.data, frame.cols, frame.rows);

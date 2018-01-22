@@ -1,12 +1,12 @@
 //
-//  running_example.cpp
+//  face_detector.cpp
 //  FaceDetection
 //
 //  Created by Lillian on 2018/1/11.
 //  Copyright © 2018年 Ran Wang. All rights reserved.
 //
 
-#include "running_example.h"
+#include "face_detector.h"
 
 #include "constants.h"
 #include <vector>
@@ -27,16 +27,16 @@ using namespace cv;
 
 namespace face_detection{
     
-    void RunningExample::Init() {
+    void FaceDetector::Init() {
         logger.Init(LOGGER_DIR, MethodName());
         init = true;
     }
     
-    RunningExample::~RunningExample() {
+    FaceDetector::FaceDetector() {
         logger.Write();
     }
     
-    void RunningExample::DrawArticulation(const Mat& img) {
+    void FaceDetector::DrawArticulation(const Mat& img) {
         Mat imageSobel;
         stringstream meanValueStream;
         Sobel(img, imageSobel, CV_16U, 1, 1);
@@ -49,7 +49,7 @@ namespace face_detection{
         putText(img, meanValueString, Point(20, 50), CV_FONT_HERSHEY_COMPLEX, 0.5, Scalar(255, 255, 25));
     }
     
-    void RunningExample::ShowAndSave(const Mat& img, bool show, bool save, string save_path) {
+    void FaceDetector::ShowAndSave(const Mat& img, bool show, bool save, string save_path) {
         DrawArticulation(img);
         if (show) {
             imshow("result", img);
@@ -63,7 +63,7 @@ namespace face_detection{
         }
     }
     
-    void RunningExample::Draw(const Mat &img, const vector<int> &face, bool show, bool save, string save_path) {
+    void FaceDetector::Draw(const Mat &img, const vector<int> &face, bool show, bool save, string save_path) {
         if (face.size() != 4) {
             ShowAndSave(img, show, save, save_path);
             return;
@@ -87,7 +87,7 @@ namespace face_detection{
         ShowAndSave(img, show, save, save_path);
     }
 
-    int RunningExample::RunCamera(bool show, bool save) {
+    int FaceDetector::RunCamera(bool show, bool save) {
         INIT_CHECK(1);
         VideoCapture capture;
         Mat frame;
@@ -132,7 +132,7 @@ namespace face_detection{
         return 0;
     }
 
-    int RunningExample::RunImage(const string image_path, double* time, bool show, bool save) {
+    int FaceDetector::RunImage(const string image_path, double* time, bool show, bool save) {
         INIT_CHECK(1);
         double t = (double)getTickCount();
         Mat image = imread(image_path, 1);
@@ -157,7 +157,7 @@ namespace face_detection{
         return 0;
     }
     
-    int RunningExample::RunImages(const vector<string> image_paths, bool show, bool save) {
+    int FaceDetector::RunImages(const vector<string> image_paths, bool show, bool save) {
         INIT_CHECK(1);
         int return_status = 0;
         for(auto image_path : image_paths) {

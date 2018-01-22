@@ -16,41 +16,41 @@ using namespace cv;
 using namespace std;
 
 void RunOpenCV() {
-    face_detection::OpenCVExample opencv_example;
-//    opencv_example.RunCamera();
+    face_detection::OpenCVDetector opencv_example;
+    opencv_example.RunCamera();
     //opencv_example.RunImage("/Users/lillian/yzkj/code/workspace/FaceDetection/FaceDetection/test_data/lena.jpg", nullptr, true, true);
     //cv::waitKey(0);
-    std::vector<std::string> image_paths;
-    for (int i = 0; i < 200; i++) {
-        char buf[10];
-        std::sprintf(buf, "%d", i);
-        image_paths.push_back("/Users/lillian/yzkj/code/workspace/FaceDetection/FaceDetection/result/image_" + std::string(buf) + ".jpg");
-    }
-    opencv_example.RunImages(image_paths, false, true);
+//    std::vector<std::string> image_paths;
+//    for (int i = 0; i < 200; i++) {
+//        char buf[10];
+//        std::sprintf(buf, "%d", i);
+//        image_paths.push_back("/Users/lillian/yzkj/code/workspace/FaceDetection/FaceDetection/result/image_" + std::string(buf) + ".jpg");
+//    }
+//    opencv_example.RunImages(image_paths, false, true);
 }
 
 void RunPico() {
-    face_detection::PicoExample pico_example;
-//    pico_example.RunCamera();
-    std::vector<std::string> image_paths;
-    for (int i = 0; i < 200; i++) {
-        char buf[10];
-        std::sprintf(buf, "%d", i);
-        image_paths.push_back("/Users/lillian/yzkj/code/workspace/FaceDetection/FaceDetection/result/image_" + std::string(buf) + ".jpg");
-    }
-    pico_example.RunImages(image_paths, false, true);
+    face_detection::PicoDetector pico_example;
+    pico_example.RunCamera();
+//    std::vector<std::string> image_paths;
+//    for (int i = 0; i < 200; i++) {
+//        char buf[10];
+//        std::sprintf(buf, "%d", i);
+//        image_paths.push_back("/Users/lillian/yzkj/code/workspace/FaceDetection/FaceDetection/result/image_" + std::string(buf) + ".jpg");
+//    }
+//    pico_example.RunImages(image_paths, false, true);
 }
 
 void RunOpenNPD() {
-    face_detection::OpenNPDExample open_npd_example;
-//    open_npd_example.RunCamera();
-    std::vector<std::string> image_paths;
-    for (int i = 0; i < 200; i++) {
-        char buf[10];
-        std::sprintf(buf, "%d", i);
-        image_paths.push_back("/Users/lillian/yzkj/code/workspace/FaceDetection/FaceDetection/result/image_" + std::string(buf) + ".jpg");
-    }
-    open_npd_example.RunImages(image_paths, false, true);
+    face_detection::OpenNPDDetector open_npd_example;
+    open_npd_example.RunCamera();
+//    std::vector<std::string> image_paths;
+//    for (int i = 0; i < 200; i++) {
+//        char buf[10];
+//        std::sprintf(buf, "%d", i);
+//        image_paths.push_back("/Users/lillian/yzkj/code/workspace/FaceDetection/FaceDetection/result/image_" + std::string(buf) + ".jpg");
+//    }
+//    open_npd_example.RunImages(image_paths, false, true);
 }
 
 void GenerateImages() {
@@ -63,8 +63,8 @@ void GenerateImages() {
 
 int main() {
 //    RunOpenCV();
-//    RunPico();
-    RunOpenNPD();
+    RunPico();
+//    RunOpenNPD();
 //    GenerateImages();
     return 0;
 }

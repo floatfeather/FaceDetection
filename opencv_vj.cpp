@@ -16,7 +16,7 @@ using namespace cv;
 
 namespace face_detection {
     
-    OpenCVExample::OpenCVExample() {
+    OpenCVDetector::OpenCVDetector() {
         if(!cascade.load(OPENCV_VJ_MODEL_PATH))
         {
             cerr << "ERROR: Could not load classifier cascade" << endl;
@@ -24,11 +24,11 @@ namespace face_detection {
         Init();
     }
     
-    string OpenCVExample::MethodName() {
+    string OpenCVDetector::MethodName() {
         return "opencv_vj";
     }
     
-    bool OpenCVExample::FaceDetect(const Mat& img, vector<int>* face) {
+    bool OpenCVDetector::FaceDetect(const Mat& img, vector<int>* face) {
         vector<Rect> faces;
         Mat gray, smallImg;
         

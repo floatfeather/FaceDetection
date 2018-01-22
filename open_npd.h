@@ -9,14 +9,14 @@
 #ifndef open_npd_h
 #define open_npd_h
 
-#include "running_example.h"
+#include "face_detector.h"
 #include "npddetect.h"
 
 namespace face_detection {
-    class OpenNPDExample : public RunningExample{
+    class OpenNPDDetector : public FaceDetector{
     public:
-        OpenNPDExample();
-        virtual ~OpenNPDExample();
+        OpenNPDDetector();
+        virtual ~OpenNPDDetector();
         bool FaceDetect(const cv::Mat& img, std::vector<int>* face);
         std::string MethodName();
     private:

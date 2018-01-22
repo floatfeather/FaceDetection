@@ -9,14 +9,14 @@
 #ifndef pico_h
 #define pico_h
 
-#include "running_example.h"
+#include "face_detector.h"
 #include "opencv2/highgui/highgui_c.h"
 
 namespace face_detection {
-    class PicoExample : public RunningExample {
+    class PicoDetector : public FaceDetector {
     public:
-        PicoExample();
-        virtual ~PicoExample();
+        PicoDetector();
+        virtual ~PicoDetector();
         bool FaceDetect(const cv::Mat& img, std::vector<int>* face);
         std::string MethodName();
     private:

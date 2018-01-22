@@ -1,22 +1,22 @@
 //
-//  running_example.hpp
+//  face_detector.h
 //  FaceDetection
 //
 //  Created by Lillian on 2018/1/11.
 //  Copyright © 2018年 Ran Wang. All rights reserved.
 //
 
-#ifndef running_example_h
-#define running_example_h
+#ifndef face_detector_h
+#define face_detector_h
 
 #include <vector>
 #include "opencv2/imgproc.hpp"
 #include "result_logger.h"
 
 namespace face_detection {
-class RunningExample {
+class FaceDetector {
 public:
-    ~RunningExample();
+    FaceDetector();
     void Init();
     int RunCamera(bool show = true, bool save = false);
     int RunImage(const std::string image_path, double* time = nullptr, bool show = true, bool save = false);
@@ -32,4 +32,4 @@ private:
 };
 }
 
-#endif /* running_example_h */
+#endif /* face_detector_h */

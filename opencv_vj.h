@@ -12,12 +12,12 @@
 #include <vector>
 #include "opencv2/objdetect.hpp"
 #include "opencv2/imgproc.hpp"
-#include "running_example.h"
+#include "face_detector.h"
 
 namespace face_detection {
-class OpenCVExample : public RunningExample{
+class OpenCVDetector : public FaceDetector{
 public:
-    OpenCVExample();
+    OpenCVDetector();
     bool FaceDetect(const cv::Mat& img, std::vector<int>* face);
     std::string MethodName();
 private:

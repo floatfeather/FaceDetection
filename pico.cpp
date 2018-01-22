@@ -21,20 +21,20 @@ using namespace std;
 
 namespace face_detection {
     
-    PicoExample::PicoExample() {
+    PicoDetector::PicoDetector() {
         cascade = GetCascade();
         Init();
     }
     
-    PicoExample::~PicoExample() {
+    PicoDetector::~PicoDetector() {
         free(cascade);
     }
     
-    string PicoExample::MethodName() {
+    string PicoDetector::MethodName() {
         return "pico";
     }
     
-    bool PicoExample::FaceDetect(const Mat& img, vector<int> *face) {
+    bool PicoDetector::FaceDetect(const Mat& img, vector<int> *face) {
         IplImage frame = img;
         IplImage* framecopy = cvCreateImage(cvSize(frame.width, frame.height), frame.depth, frame.nChannels);
         cvCopy(&frame, framecopy, 0);
@@ -47,7 +47,7 @@ namespace face_detection {
         return true;
     }
     
-    void* PicoExample::GetCascade() {
+    void* PicoDetector::GetCascade() {
         int size;
         FILE* file = fopen(PICO_MODEL_PATH.c_str(), "rb");
         
@@ -70,7 +70,7 @@ namespace face_detection {
         return cascade;
     }
     
-    bool PicoExample::DetectSingleFrame(const IplImage& frame, std::vector<int>* face) {
+    bool PicoDetector::DetectSingleFrame(const IplImage& frame, std::vector<int>* face) {
         uint8_t* pixels;
         int nrows, ncols, ldim;
         
@@ -122,7 +122,7 @@ namespace face_detection {
         }
     }
 
-    int PicoExample::FindObjects(float rcsq[], int maxndetections,void* cascade,
+    int PicoDetector::FindObjects(float rcsq[], int maxndetections,void* cascade,
                                  void* pixels, int nrows, int ncols, int ldim,
                                  float scalefactor, float stridefactor, float minsize, float maxsize) {
         float s;
@@ -166,7 +166,7 @@ namespace face_detection {
         return ndetections;
     }
     
-    int PicoExample::RunCascade(void* cascade, float* o, int r, int c, int s, void* vppixels, int nrows, int ncols, int ldim) {
+    int PicoDetector::RunCascade(void* cascade, float* o, int r, int c, int s, void* vppixels, int nrows, int ncols, int ldim) {
         int i, j, idx;
         
         uint8_t* pixels;
@@ -218,7 +218,7 @@ namespace face_detection {
         return +1;
     }
     
-    float PicoExample::GetOverlap(float r1, float c1, float s1, float r2, float c2, float s2) {
+    float PicoDetector::GetOverlap(float r1, float c1, float s1, float r2, float c2, float s2) {
         float overr, overc;
         
         overr = MAX(0, MIN(r1+s1/2, r2+s2/2) - MAX(r1-s1/2, r2-s2/2));
@@ -227,7 +227,7 @@ namespace face_detection {
         return overr*overc/(s1*s1+s2*s2-overr*overc);
     }
     
-    void PicoExample::CCDFS(int a[], int i, float rcsq[], int n) {
+    void PicoDetector::CCDFS(int a[], int i, float rcsq[], int n) {
         int j;
         
         //
@@ -242,7 +242,7 @@ namespace face_detection {
             }
     }
     
-    int PicoExample::FindConnectedComponents(int a[], float rcsq[], int n) {
+    int PicoDetector::FindConnectedComponents(int a[], float rcsq[], int n) {
         int i, cc;
         
         if(!n)
@@ -267,7 +267,7 @@ namespace face_detection {
         return cc - 1; // number of connected components
     }
     
-    int PicoExample::ClusterDetections(float rcsq[], int n) {
+    int PicoDetector::ClusterDetections(float rcsq[], int n) {
         int idx, ncc, cc;
         int a[4096];
         
