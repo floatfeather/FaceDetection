@@ -12,11 +12,18 @@
 #include <vector>
 #include "opencv2/imgproc.hpp"
 #include "result_logger.h"
+#include <dlib/image_processing/frontal_face_detector.h>
+#include <dlib/image_processing/render_face_detections.h>
+#include <dlib/image_processing.h>
+//#include <dlib/gui_widgets.h>
+#include <dlib/image_io.h>
+#include <dlib/opencv.h>
 
 namespace face_detection {
 //  Framework of face detection, including camera routines, image IO and the display of result.
 class FaceDetector {
 public:
+    FaceDetector();
     // Opens the camera and detects the face in camera video. This function is only tested on MAC.
     int RunCamera(bool show = true, bool save = false);
     // Detects the face in image, which is located in 'image_path'. The detection time is saved in '*time'
@@ -26,8 +33,8 @@ public:
     int RunImages(const std::vector<std::string> image_paths, bool show = true, bool save = false);
     // Core function of face detection. Each face detection algorithm should implement this function.
     // The image is provided in 'img', and the result is saved in '*face'. '*face' should have four
-    // elements if a face is detected. The four elements indicate the x-axis, y-axis, width and height
-    // of the face.
+    // elements if a face is detected. The four elements indicate the x-axis and y-axis of the left-up
+    // corner, width and height of the face.
     virtual bool FaceDetect(const cv::Mat& img, std::vector<int>* face) = 0;
     // Name of the algorithm.
     virtual std::string MethodName() = 0;
@@ -41,7 +48,9 @@ private:
     // Draws articulation on the image.
     void DrawArticulation(const cv::Mat& img);
     void ShowAndSave(const cv::Mat& img, bool show, bool save, std::string save_path);
+    void GetLandmarks(const cv::Mat& img, const std::vector<int>& face, std::vector<cv::Point>* landmarks);
     ResultLogger logger;
+    dlib::shape_predictor sp;
 };
 }
 

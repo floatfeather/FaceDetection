@@ -19,6 +19,10 @@ using namespace cv;
 
 namespace face_detection{
     
+    FaceDetector::FaceDetector() {
+        dlib::deserialize(LANDMARK_MODEL_PATH) >> sp;
+    }
+    
     void FaceDetector::StartLog() {
         logger.Init(LOGGER_DIR, MethodName());
     }
@@ -27,6 +31,20 @@ namespace face_detection{
         logger.Write();
     }
     
+    void FaceDetector::GetLandmarks(const Mat& img, const vector<int>& face, vector<Point>* landmarks) {
+        Mat gray;
+        cvtColor(img, gray, COLOR_BGR2GRAY);
+        dlib::cv_image<unsigned char> cvimg(gray);
+        dlib::rectangle dlib_rec(face[0], face[1], face[0] + face[2], face[1] + face[3]);
+        dlib::full_object_detection shape = sp(cvimg, dlib_rec);
+        for (int j = 0; j < shape.num_parts(); j++) {
+            cv::Point pointInterest;
+            pointInterest.x = shape.part(j)(0);
+            pointInterest.y = shape.part(j)(1);
+            landmarks->push_back(pointInterest);
+        }
+    }
+
     void FaceDetector::DrawArticulation(const Mat& img) {
         Mat imageSobel;
         stringstream meanValueStream;
@@ -70,6 +88,13 @@ namespace face_detection{
             center.y = cvRound((face_rect.y + face_rect.height*0.5));
             int radius = cvRound((face_rect.width + face_rect.height)*0.25);
             circle(img, center, radius, color, 3, 8, 0);
+            if (ENABLE_LANDMARK) {
+                vector<Point> landmarks;
+                GetLandmarks(img, face, &landmarks);
+                for(auto point : landmarks) {
+                    circle(img, point, 2, cv::Scalar(0, 0, 255));
+                }
+            }
         }
         else {
             rectangle(img, cvPoint(cvRound(face_rect.x), cvRound(face_rect.y)),
